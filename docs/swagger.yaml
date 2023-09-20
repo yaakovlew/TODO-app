@@ -1,0 +1,148 @@
+basePath: /
+definitions:
+  handler.errorWeb:
+    properties:
+      message:
+        type: string
+    type: object
+host: localhost:8000
+info:
+  contact: {}
+  description: API Sever for SberTech Application
+  title: backend
+  version: "1.0"
+paths:
+  /task:
+    delete:
+      description: delete task
+      operationId: delete-task
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+      tags:
+      - task
+    post:
+      description: create task
+      operationId: create-task
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+      tags:
+      - task
+    put:
+      description: update task
+      operationId: update-task
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+      tags:
+      - task
+  /task/:id:
+    get:
+      description: get task
+      operationId: get-task
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+      tags:
+      - task
+  /task/list:
+    get:
+      description: get tasks list
+      operationId: get-tasks-list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+      tags:
+      - task
+swagger: "2.0"
