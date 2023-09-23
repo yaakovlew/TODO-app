@@ -5,22 +5,62 @@ definitions:
       message:
         type: string
     type: object
+  models.Task:
+    properties:
+      date:
+        type: string
+      description:
+        type: string
+      header:
+        type: string
+      id:
+        type: integer
+      is_done:
+        type: boolean
+    type: object
+  models.TaskInput:
+    properties:
+      date:
+        type: string
+      description:
+        type: string
+      header:
+        type: string
+      is_done:
+        type: boolean
+    required:
+    - date
+    - description
+    - header
+    - is_done
+    type: object
 host: localhost:8000
 info:
   contact: {}
   description: API Sever for SberTech Application
-  title: backend
+  title: SberTech-app
   version: "1.0"
 paths:
   /task:
-    delete:
-      description: delete task
-      operationId: delete-task
+    post:
+      consumes:
+      - application/json
+      description: create task
+      operationId: create-task
+      parameters:
+      - description: Task input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.TaskInput'
       produces:
       - application/json
       responses:
         "200":
           description: OK
+          schema:
+            type: integer
         "400":
           description: Bad Request
           schema:
@@ -39,14 +79,57 @@ paths:
             $ref: '#/definitions/handler.errorWeb'
       tags:
       - task
-    post:
-      description: create task
-      operationId: create-task
+  /task/{id}:
+    delete:
+      description: delete task
+      operationId: delete-task
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: integer
       produces:
       - application/json
       responses:
         "200":
           description: OK
+          schema:
+            type: int
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+      tags:
+      - task
+    get:
+      description: get task
+      operationId: get-task
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Task'
         "400":
           description: Bad Request
           schema:
@@ -66,40 +149,29 @@ paths:
       tags:
       - task
     put:
+      consumes:
+      - application/json
       description: update task
       operationId: update-task
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: update task input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.TaskInput'
       produces:
       - application/json
       responses:
         "200":
           description: OK
-        "400":
-          description: Bad Request
           schema:
-            $ref: '#/definitions/handler.errorWeb'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/handler.errorWeb'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/handler.errorWeb'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/handler.errorWeb'
-      tags:
-      - task
-  /task/:id:
-    get:
-      description: get task
-      operationId: get-task
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
+            $ref: '#/definitions/models.TaskInput'
         "400":
           description: Bad Request
           schema:
@@ -122,6 +194,86 @@ paths:
     get:
       description: get tasks list
       operationId: get-tasks-list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Task'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+      tags:
+      - task
+  /task/list/date:
+    get:
+      description: get tasks list
+      operationId: get-tasks-list-date
+      parameters:
+      - description: Is_Done
+        in: query
+        name: is_done
+        required: true
+        type: boolean
+      - description: Date
+        in: query
+        name: date
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorWeb'
+      tags:
+      - task
+  /task/list/page:
+    get:
+      description: get tasks list
+      operationId: get-tasks-list-page
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Is_Done
+        in: query
+        name: is_done
+        required: true
+        type: boolean
       produces:
       - application/json
       responses:

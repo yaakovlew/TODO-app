@@ -6,6 +6,6 @@ COPY . .
 
 RUN go mod download
 
-RUN go build -o todo-app ./cmd/main.go
+RUN go build -o task ./cmd/main.go
 
-CMD ["./todo-app"]
+CMD ["./task"]

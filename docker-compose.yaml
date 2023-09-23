@@ -5,12 +5,12 @@ networks:
     driver: bridge
 
 services:
-  todo-app:
+  task:
     networks:
       - geotracking-net
-    build: ./todo-app
+    build: ./../task
     restart: always
-    command: ./todo-app
+    command: ./task
     ports:
       - 8000:8000
     environment:
@@ -26,6 +26,8 @@ services:
       - geotracking-net
     environment:
       - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=todo_app
+      - POSTGRES_USER=postgres
     ports:
       - 5432:5432
     volumes:

@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	_ "task/docs"
 	"task/pkg/service"
 )
 
@@ -27,8 +28,14 @@ func (c *Controller) InitRoutes() *gin.Engine {
 		task.GET("/:id", c.Task.GetTask)
 		task.POST("", c.Task.CreateTask)
 		task.DELETE("/:id", c.Task.DeleteTask)
-		task.PUT("", c.Task.UpdateTask)
-		task.GET("/list", c.Task.GetTasksList)
+		task.PUT("/:id", c.Task.UpdateTask)
+
+		list := task.Group("/list")
+		{
+			list.GET("", c.Task.GetTasksList)
+			list.GET("/date", c.Task.GetTasksByDate)
+			list.GET("/page", c.Task.GetTasksByPage)
+		}
 	}
 
 	return router

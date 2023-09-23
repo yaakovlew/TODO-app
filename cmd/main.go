@@ -15,7 +15,7 @@ import (
 	"task/pkg/service"
 )
 
-// @title backend
+// @title SberTech-app
 // @version 1.0
 // @description API Sever for SberTech Application
 
