@@ -133,7 +133,7 @@ const docTemplate = `{
                 "operationId": "get-tasks-list-date",
                 "parameters": [
                     {
-                        "type": "boolean",
+                        "type": "integer",
                         "description": "Is_Done",
                         "name": "is_done",
                         "in": "query",
@@ -197,7 +197,7 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "boolean",
+                        "type": "integer",
                         "description": "Is_Done",
                         "name": "is_done",
                         "in": "query",

@@ -51,14 +51,20 @@ func (r *TaskRepository) DeleteTask(id int) (int, error) {
 	return id, nil
 }
 
-func (r *TaskRepository) UpdateTask(id int, task models.TaskInput) (models.TaskInput, error) {
+func (r *TaskRepository) UpdateTask(id int, task models.TaskInput) (models.Task, error) {
 	query := fmt.Sprintf("UPDATE %s SET header = $1, description = $2, date = $3, is_done = $4 WHERE id = $5",
 		taskTable)
 	if _, err := r.db.Exec(query, task.Header, task.Description, task.Date, task.IsDone, id); err != nil {
-		return models.TaskInput{}, err
+		return models.Task{}, err
 	}
 
-	return task, nil
+	return models.Task{
+		Id:          id,
+		Header:      task.Header,
+		Description: task.Description,
+		Date:        task.Date,
+		IsDone:      *task.IsDone,
+	}, nil
 }
 
 func (r *TaskRepository) GetTasksList() ([]models.Task, error) {

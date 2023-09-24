@@ -48,8 +48,8 @@ func (h *TaskHandler) CreateTask(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, models.TaskIdResponse{
-		TaskId: taskId,
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"task_id": taskId,
 	})
 }
 
@@ -100,22 +100,19 @@ func (h *TaskHandler) GetTask(c *gin.Context) {
 func (h *TaskHandler) UpdateTask(c *gin.Context) {
 	taskId, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		err := fmt.Errorf("incorrect data: %s", err.Error())
-		NewErrorResponse(c, http.StatusBadRequest, err.Error())
+		NewErrorResponse(c, http.StatusBadRequest, fmt.Errorf("incorrect data: %s", err.Error()).Error())
 		return
 	}
 
 	var taskInput models.TaskInput
 	if err := c.BindJSON(&taskInput); err != nil {
-		err := fmt.Errorf("incorrect data: %s", err.Error())
-		NewErrorResponse(c, http.StatusBadRequest, err.Error())
+		NewErrorResponse(c, http.StatusBadRequest, fmt.Errorf("incorrect data: %s", err.Error()).Error())
 		return
 	}
 
 	task, err := h.service.UpdateTask(taskId, taskInput)
 	if err != nil {
-		err := fmt.Errorf("server error: %s", err.Error())
-		NewErrorResponse(c, http.StatusInternalServerError, err.Error())
+		NewErrorResponse(c, http.StatusInternalServerError, fmt.Errorf("server error: %s", err.Error()).Error())
 		return
 	}
 
@@ -137,20 +134,18 @@ func (h *TaskHandler) UpdateTask(c *gin.Context) {
 func (h *TaskHandler) DeleteTask(c *gin.Context) {
 	taskId, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		err := fmt.Errorf("incorrect data: %s", err.Error())
-		NewErrorResponse(c, http.StatusBadRequest, err.Error())
+		NewErrorResponse(c, http.StatusBadRequest, fmt.Errorf("incorrect data: %s", err.Error()).Error())
 		return
 	}
 
 	deletedTaskId, err := h.service.DeleteTask(taskId)
 	if err != nil {
-		err := fmt.Errorf("server error: %s", err.Error())
-		NewErrorResponse(c, http.StatusInternalServerError, err.Error())
+		NewErrorResponse(c, http.StatusInternalServerError, fmt.Errorf("server error: %s", err.Error()).Error())
 		return
 	}
 
 	c.JSON(http.StatusOK, map[string]interface{}{
-		"deleted_task_id": deletedTaskId,
+		"task_id": deletedTaskId,
 	})
 }
 
@@ -158,7 +153,7 @@ func (h *TaskHandler) DeleteTask(c *gin.Context) {
 // @Tags task
 // @Description get tasks list
 // @Id get-tasks-list-date
-// @Param is_done query boolean true "Is_Done"
+// @Param is_done query integer true "Is_Done"
 // @Param date query string true "Date"
 // @Produce json
 // @Success 200
@@ -171,21 +166,23 @@ func (h *TaskHandler) GetTasksByDate(c *gin.Context) {
 	dateParam := c.Query("date")
 	date, err := time.Parse("2006-01-02", dateParam)
 	if err != nil {
-		err := fmt.Errorf("incorrect flag: %s", err.Error())
-		NewErrorResponse(c, http.StatusBadRequest, err.Error())
+		NewErrorResponse(c, http.StatusBadRequest, fmt.Errorf("incorrect date: %s", err.Error()).Error())
 		return
 	}
-	isDone, err := strconv.ParseBool(c.Query("is_done"))
-	if err != nil {
-		err := fmt.Errorf("incorrect flag: %s", err.Error())
-		NewErrorResponse(c, http.StatusBadRequest, err.Error())
+	isDoneCount := c.Query("is_done")
+	isDone := false
+	if isDoneCount == "1" {
+		isDone = true
+	} else if isDoneCount == "0" {
+		isDone = false
+	} else {
+		NewErrorResponse(c, http.StatusBadRequest, fmt.Errorf("incorrect flag").Error())
 		return
 	}
 
 	tasks, err := h.service.GetTasksByDate(date, isDone)
 	if err != nil {
-		err := fmt.Errorf("server error: %s", err.Error())
-		NewErrorResponse(c, http.StatusInternalServerError, err.Error())
+		NewErrorResponse(c, http.StatusInternalServerError, fmt.Errorf("server error: %s", err.Error()).Error())
 		return
 	}
 
@@ -206,8 +203,7 @@ func (h *TaskHandler) GetTasksByDate(c *gin.Context) {
 func (h *TaskHandler) GetTasksList(c *gin.Context) {
 	tasks, err := h.service.GetTasksList()
 	if err != nil {
-		err := fmt.Errorf("server error: %s", err.Error())
-		NewErrorResponse(c, http.StatusInternalServerError, err.Error())
+		NewErrorResponse(c, http.StatusInternalServerError, fmt.Errorf("server error: %s", err.Error()).Error())
 		return
 	}
 
@@ -219,7 +215,7 @@ func (h *TaskHandler) GetTasksList(c *gin.Context) {
 // @Description get tasks list
 // @Id get-tasks-list-page
 // @Param page query integer true "Page"
-// @Param is_done query boolean true "Is_Done"
+// @Param is_done query integer true "Is_Done"
 // @Produce json
 // @Success 200
 // @Failure 400 {object} .errorWeb
@@ -231,24 +227,25 @@ func (h *TaskHandler) GetTasksByPage(c *gin.Context) {
 	pageRead := c.Query("page")
 	page, err := strconv.Atoi(pageRead)
 	if err != nil {
-		err := fmt.Errorf("incorrect page: %s", err.Error())
-		NewErrorResponse(c, http.StatusBadRequest, err.Error())
+		NewErrorResponse(c, http.StatusBadRequest, fmt.Errorf("incorrect page: %s", err.Error()).Error())
 		return
 	}
-	isDone, err := strconv.ParseBool(c.Query("is_done"))
-	if err != nil {
-		err := fmt.Errorf("incorrect flag: %s", err.Error())
-		NewErrorResponse(c, http.StatusBadRequest, err.Error())
-		return
-	}
-	tasks, err := h.service.GetTasksByPage(isDone, page)
-	if err != nil {
-		err := fmt.Errorf("server error: %s", err.Error())
-		NewErrorResponse(c, http.StatusInternalServerError, err.Error())
+	isDoneCount := c.Query("is_done")
+	isDone := false
+	if isDoneCount == "1" {
+		isDone = true
+	} else if isDoneCount == "0" {
+		isDone = false
+	} else {
+		NewErrorResponse(c, http.StatusBadRequest, fmt.Errorf("incorrect flag").Error())
 		return
 	}
 
-	c.JSON(http.StatusOK, map[string]interface{}{
-		"tasks": tasks,
-	})
+	tasks, err := h.service.GetTasksByPage(isDone, page)
+	if err != nil {
+		NewErrorResponse(c, http.StatusInternalServerError, fmt.Errorf("server error: %s", err.Error()).Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, tasks)
 }

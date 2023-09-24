@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"task/pkg/models"
 	"task/pkg/repository"
 	"time"
@@ -17,6 +18,9 @@ func NewTaskService(repo repository.Task) *TaskService {
 }
 
 func (s *TaskService) GetTask(id int) (models.Task, error) {
+	if id == 0 {
+		return models.Task{}, fmt.Errorf("not found")
+	}
 	return s.repo.GetTask(id)
 }
 
@@ -28,7 +32,7 @@ func (s *TaskService) DeleteTask(id int) (int, error) {
 	return s.repo.DeleteTask(id)
 }
 
-func (s *TaskService) UpdateTask(id int, task models.TaskInput) (models.TaskInput, error) {
+func (s *TaskService) UpdateTask(id int, task models.TaskInput) (models.Task, error) {
 	return s.repo.UpdateTask(id, task)
 }
 

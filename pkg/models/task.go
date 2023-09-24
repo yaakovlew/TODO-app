@@ -16,12 +16,3 @@ type Task struct {
 	Description string    `json:"description" db:"description"`
 	Date        time.Time `json:"date" db:"date"`
 }
-
-type PaginationTasks struct {
-	DoneTasks   []Task `json:"done"`
-	UndoneTasks []Task `json:"undone"`
-}
-
-type TaskIdResponse struct {
-	TaskId int `json:"task_id"`
-}
