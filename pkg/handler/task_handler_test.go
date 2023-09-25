@@ -396,7 +396,7 @@ func TestTaskHandler_GetTasksByDate(t *testing.T) {
 		{
 			name:   "OK",
 			Date:   date,
-			IsDone: "0",
+			IsDone: "false",
 			mockBehaviour: func(s *mock_service.MockTask, date time.Time, isDone bool) {
 				s.EXPECT().GetTasksByDate(date, isDone).Return([]models.Task{
 					{
@@ -477,7 +477,7 @@ func TestTaskHandler_GetTasksByPage(t *testing.T) {
 		{
 			name:   "OK",
 			Page:   1,
-			IsDone: "0",
+			IsDone: "false",
 			mockBehaviour: func(s *mock_service.MockTask, isDone bool, page int) {
 				s.EXPECT().GetTasksByPage(isDone, page).Return([]models.Task{
 					{
@@ -495,7 +495,7 @@ func TestTaskHandler_GetTasksByPage(t *testing.T) {
 		{
 			name:   "Empty Page",
 			Page:   -1,
-			IsDone: "0",
+			IsDone: "false",
 			mockBehaviour: func(s *mock_service.MockTask, isDone bool, page int) {
 				s.EXPECT().GetTasksByPage(isDone, page).Return([]models.Task{}, fmt.Errorf("server error: pq: OFFSET must not be negative"))
 			},

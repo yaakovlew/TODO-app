@@ -133,7 +133,7 @@ const docTemplate = `{
                 "operationId": "get-tasks-list-date",
                 "parameters": [
                     {
-                        "type": "integer",
+                        "type": "boolean",
                         "description": "Is_Done",
                         "name": "is_done",
                         "in": "query",
@@ -197,7 +197,7 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "integer",
+                        "type": "boolean",
                         "description": "Is_Done",
                         "name": "is_done",
                         "in": "query",
@@ -464,8 +464,8 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:8000",
 	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "SberTech-app",
-	Description:      "API Sever for SberTech Application",
+	Title:            "Todo-app",
+	Description:      "API Sever for TODO-Application",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 }

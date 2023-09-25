@@ -153,7 +153,7 @@ func (h *TaskHandler) DeleteTask(c *gin.Context) {
 // @Tags task
 // @Description get tasks list
 // @Id get-tasks-list-date
-// @Param is_done query integer true "Is_Done"
+// @Param is_done query boolean true "Is_Done"
 // @Param date query string true "Date"
 // @Produce json
 // @Success 200
@@ -170,12 +170,8 @@ func (h *TaskHandler) GetTasksByDate(c *gin.Context) {
 		return
 	}
 	isDoneCount := c.Query("is_done")
-	isDone := false
-	if isDoneCount == "1" {
-		isDone = true
-	} else if isDoneCount == "0" {
-		isDone = false
-	} else {
+	isDone, err := strconv.ParseBool(isDoneCount)
+	if err != nil {
 		NewErrorResponse(c, http.StatusBadRequest, fmt.Errorf("incorrect flag").Error())
 		return
 	}
@@ -215,7 +211,7 @@ func (h *TaskHandler) GetTasksList(c *gin.Context) {
 // @Description get tasks list
 // @Id get-tasks-list-page
 // @Param page query integer true "Page"
-// @Param is_done query integer true "Is_Done"
+// @Param is_done query boolean true "Is_Done"
 // @Produce json
 // @Success 200
 // @Failure 400 {object} .errorWeb
@@ -230,13 +226,10 @@ func (h *TaskHandler) GetTasksByPage(c *gin.Context) {
 		NewErrorResponse(c, http.StatusBadRequest, fmt.Errorf("incorrect page: %s", err.Error()).Error())
 		return
 	}
+
 	isDoneCount := c.Query("is_done")
-	isDone := false
-	if isDoneCount == "1" {
-		isDone = true
-	} else if isDoneCount == "0" {
-		isDone = false
-	} else {
+	isDone, err := strconv.ParseBool(isDoneCount)
+	if err != nil {
 		NewErrorResponse(c, http.StatusBadRequest, fmt.Errorf("incorrect flag").Error())
 		return
 	}

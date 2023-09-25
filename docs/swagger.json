@@ -1,8 +1,8 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "API Sever for SberTech Application",
-        "title": "SberTech-app",
+        "description": "API Sever for TODO-Application",
+        "title": "Todo-app",
         "contact": {},
         "version": "1.0"
     },
@@ -126,7 +126,7 @@
                 "operationId": "get-tasks-list-date",
                 "parameters": [
                     {
-                        "type": "integer",
+                        "type": "boolean",
                         "description": "Is_Done",
                         "name": "is_done",
                         "in": "query",
@@ -190,7 +190,7 @@
                         "required": true
                     },
                     {
-                        "type": "integer",
+                        "type": "boolean",
                         "description": "Is_Done",
                         "name": "is_done",
                         "in": "query",

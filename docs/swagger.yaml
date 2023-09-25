@@ -37,8 +37,8 @@ definitions:
 host: localhost:8000
 info:
   contact: {}
-  description: API Sever for SberTech Application
-  title: SberTech-app
+  description: API Sever for TODO-Application
+  title: Todo-app
   version: "1.0"
 paths:
   /task:
@@ -230,7 +230,7 @@ paths:
         in: query
         name: is_done
         required: true
-        type: integer
+        type: boolean
       - description: Date
         in: query
         name: date
@@ -273,7 +273,7 @@ paths:
         in: query
         name: is_done
         required: true
-        type: integer
+        type: boolean
       produces:
       - application/json
       responses:
