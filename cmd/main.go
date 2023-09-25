@@ -15,7 +15,7 @@ import (
 	"task/pkg/service"
 )
 
-// @title SberTech-app
+// @title Todo-app
 // @version 1.0
 // @description API Sever for SberTech Application
 

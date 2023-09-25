@@ -1,4 +1,4 @@
-CREATE TABLE task(
+CREATE TABLE IF NOT EXISTS task(
     id bigserial not null Primary key,
     header varchar(300) not null,
     description varchar(500),
