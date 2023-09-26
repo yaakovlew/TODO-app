@@ -1,13 +1,12 @@
 version: '3.8'
 
 networks:
-  geotracking-net:
-    driver: bridge
+  new:
 
 services:
   task:
     networks:
-      - geotracking-net
+      - new
     build: ./../task
     restart: always
     command: ./task
@@ -23,10 +22,13 @@ services:
     image: postgres:latest
     restart: always
     networks:
-      - geotracking-net
+      new:
+        aliases:
+          - database
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
+      - POSTGRES_DB=todo_app
     ports:
       - 5432:5432
     volumes:
@@ -37,5 +39,17 @@ services:
       timeout: 3s
       retries: 5
 
+  migrate:
+    image: migrate/migrate
+    networks:
+      - new
+    volumes:
+      - ./migrations:/migrations
+    command: [ "-path", "/migrations", "-database",  "postgres://postgres:postgres@database:5432/todo_app?sslmode=disable", "up", "3" ]
+    links:
+      - db
+    depends_on:
+      db:
+        condition: service_healthy
 volumes:
   db-data: { }

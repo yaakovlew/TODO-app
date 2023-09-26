@@ -35,7 +35,7 @@ const docTemplate = `{
                         "name": "input",
                         "in": "body",
                         "required": true,
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/models.TaskInput"
                         }
                     }
@@ -43,31 +43,31 @@ const docTemplate = `{
                 "responses": {
                     "200": {
                         "description": "OK",
-                        "schema": {
+                        "migrations": {
                             "type": "integer"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     },
                     "404": {
                         "description": "Not Found",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     },
                     "default": {
                         "description": "",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     }
@@ -87,7 +87,7 @@ const docTemplate = `{
                 "responses": {
                     "200": {
                         "description": "OK",
-                        "schema": {
+                        "migrations": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/models.Task"
@@ -96,25 +96,25 @@ const docTemplate = `{
                     },
                     "400": {
                         "description": "Bad Request",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     },
                     "404": {
                         "description": "Not Found",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     },
                     "default": {
                         "description": "",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     }
@@ -153,25 +153,25 @@ const docTemplate = `{
                     },
                     "400": {
                         "description": "Bad Request",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     },
                     "404": {
                         "description": "Not Found",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     },
                     "default": {
                         "description": "",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     }
@@ -210,25 +210,25 @@ const docTemplate = `{
                     },
                     "400": {
                         "description": "Bad Request",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     },
                     "404": {
                         "description": "Not Found",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     },
                     "default": {
                         "description": "",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     }
@@ -257,31 +257,31 @@ const docTemplate = `{
                 "responses": {
                     "200": {
                         "description": "OK",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/models.Task"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     },
                     "404": {
                         "description": "Not Found",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     },
                     "default": {
                         "description": "",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     }
@@ -312,7 +312,7 @@ const docTemplate = `{
                         "name": "input",
                         "in": "body",
                         "required": true,
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/models.TaskInput"
                         }
                     }
@@ -320,31 +320,31 @@ const docTemplate = `{
                 "responses": {
                     "200": {
                         "description": "OK",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/models.TaskInput"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     },
                     "404": {
                         "description": "Not Found",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     },
                     "default": {
                         "description": "",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     }
@@ -371,31 +371,31 @@ const docTemplate = `{
                 "responses": {
                     "200": {
                         "description": "OK",
-                        "schema": {
+                        "migrations": {
                             "type": "int"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     },
                     "404": {
                         "description": "Not Found",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     },
                     "default": {
                         "description": "",
-                        "schema": {
+                        "migrations": {
                             "$ref": "#/definitions/handler.errorWeb"
                         }
                     }

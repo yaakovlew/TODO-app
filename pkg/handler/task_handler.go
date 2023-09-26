@@ -220,17 +220,16 @@ func (h *TaskHandler) GetTasksList(c *gin.Context) {
 // @Failure default {object} errorWeb
 // @Router /task/list/page [get]
 func (h *TaskHandler) GetTasksByPage(c *gin.Context) {
+	isDoneCount := c.Query("is_done")
+	isDone, err := strconv.ParseBool(isDoneCount)
+	if err != nil {
+		NewErrorResponse(c, http.StatusBadRequest, fmt.Errorf("incorrect flag: %s", err.Error()).Error())
+		return
+	}
 	pageRead := c.Query("page")
 	page, err := strconv.Atoi(pageRead)
 	if err != nil {
 		NewErrorResponse(c, http.StatusBadRequest, fmt.Errorf("incorrect page: %s", err.Error()).Error())
-		return
-	}
-
-	isDoneCount := c.Query("is_done")
-	isDone, err := strconv.ParseBool(isDoneCount)
-	if err != nil {
-		NewErrorResponse(c, http.StatusBadRequest, fmt.Errorf("incorrect flag").Error())
 		return
 	}
 
