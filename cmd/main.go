@@ -48,6 +48,7 @@ func main() {
 		logrus.Fatalf("Fatal to connect to DB, because: %s", err.Error())
 		return
 	}
+
 	repos := repository.NewRepository(db)
 	service := service.NewService(repos)
 	handler := handler.NewController(service)
