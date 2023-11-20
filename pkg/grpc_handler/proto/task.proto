@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package task;
+
+import "models.proto";
+
+option go_package = "./api";
+
+service Task {
+  rpc CreateTask(grpc_models.TaskInput) returns (grpc_models.TaskID);
+  rpc GetTask(grpc_models.TaskID) returns (grpc_models.Task);
+  rpc UpdateTask(grpc_models.Task) returns (grpc_models.Task);
+  rpc DeleteTask(grpc_models.TaskID) returns (grpc_models.TaskID);
+  rpc GetTaskByDate(grpc_models.TaskByDate) returns (grpc_models.TasksSlice);
+  rpc GetTasksList(grpc_models.EmptyRequest) returns (grpc_models.TasksSlice);
+  rpc GetTasksByPage(grpc_models.PageRequest) returns (grpc_models.TasksSlice);
+}

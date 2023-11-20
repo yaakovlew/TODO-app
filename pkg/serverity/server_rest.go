@@ -7,11 +7,11 @@ import (
 	"time"
 )
 
-type Server struct {
+type HttpServer struct {
 	httpServer *http.Server
 }
 
-func (s *Server) Run(handler http.Handler) error {
+func (s *HttpServer) Run(handler http.Handler) error {
 	s.httpServer = &http.Server{
 		Addr:           os.Getenv("APP_IP") + ":" + os.Getenv("APP_PORT"),
 		MaxHeaderBytes: 1 << 20,
@@ -22,6 +22,6 @@ func (s *Server) Run(handler http.Handler) error {
 	return s.httpServer.ListenAndServe()
 }
 
-func (s *Server) ShutDown(ctx context.Context) error {
+func (s *HttpServer) ShutDown(ctx context.Context) error {
 	return s.httpServer.Shutdown(ctx)
 }

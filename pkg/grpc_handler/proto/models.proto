@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package grpc_models;
+
+option go_package = "./api";
+
+message TaskInput {
+  bool IsDone = 1;
+  string Header = 2;
+  string Description = 3;
+  string Date = 4;
+}
+
+message Task {
+  int32 Id = 1;
+  bool IsDone = 2;
+  string Header = 3;
+  string Description = 4;
+  string Date = 5;
+}
+
+message TaskID {
+  int32 ID = 1;
+}
+
+message TaskByDate {
+  string Date = 1;
+  bool IsDone = 2;
+}
+
+message TasksSlice {
+  repeated Task Tasks = 1;
+}
+
+message PageRequest {
+  bool IsDone = 1;
+  int32 Page = 2;
+}
+
+message EmptyRequest{}

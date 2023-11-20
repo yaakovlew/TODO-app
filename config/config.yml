@@ -3,9 +3,9 @@ host: "localhost"
 port: "8000"
 
 db:
-  #host:     "localhost"
+  host:     "localhost"
   #for docker
-  host: "host.docker.internal"
+  #host: "host.docker.internal"
   username: "postgres"
   dbname: "todo_app"
   port:     "5432"

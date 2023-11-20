@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
@@ -9,18 +8,11 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-	"task/pkg/handler"
+	"task/pkg/grpc_handler/api"
 	"task/pkg/repository"
 	"task/pkg/serverity"
 	"task/pkg/service"
 )
-
-// @title Todo-app
-// @version 1.0
-// @description API Sever for TODO-Application
-
-// @host localhost:8000
-// @BasePath /
 
 func main() {
 	logrus.SetFormatter(new(logrus.JSONFormatter))
@@ -51,11 +43,12 @@ func main() {
 
 	repos := repository.NewRepository(db)
 	service := service.NewService(repos)
-	handler := handler.NewController(service)
-	srv := new(serverity.Server)
+	handler := api.NewGRPCHandlerTask(service)
+
+	srv := new(serverity.GRPCServer)
 
 	go func() {
-		if err := srv.Run(handler.InitRoutes()); err != nil {
+		if err := srv.Run(handler); err != nil {
 			logrus.Fatalf("Problem with start server, because %s", err.Error())
 			return
 		}
@@ -66,9 +59,7 @@ func main() {
 	<-quit
 	logrus.Println("backend shutting down")
 
-	if err := srv.ShutDown(context.Background()); err != nil {
-		logrus.Errorf("error occured on server shutting down: %s", err.Error())
-	}
+	srv.ShutDown()
 
 	if err := db.Close(); err != nil {
 		logrus.Errorf("error occured on db connection close: %s", err.Error())
